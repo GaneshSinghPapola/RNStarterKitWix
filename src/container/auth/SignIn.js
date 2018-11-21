@@ -48,9 +48,9 @@ class SignIn extends React.Component {
   };
   signIn = () => {
     const { username, password } = this.state;
-    console.log(this.props, AppAction);
+    // console.log(this.props, AppAction);
     removeListener = false;
-    this.props.dispatch(AppAction.login());
+    // this.props.dispatch(AppAction.login());
     goHome();
   };
   signUp() {
