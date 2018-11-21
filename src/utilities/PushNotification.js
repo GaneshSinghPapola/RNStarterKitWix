@@ -8,7 +8,7 @@
 import {Platform} from 'react-native';
 import firebase from 'react-native-firebase'
 
-import type { Notification, NotificationOpen } from 'react-native-firebase';
+import  { Notification, NotificationOpen } from 'react-native-firebase';
 
 /*
 Get the Fcm token of the device

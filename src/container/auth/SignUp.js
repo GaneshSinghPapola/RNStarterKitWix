@@ -6,27 +6,45 @@
  * */
 
 import React, { Fragment } from "react";
-import { View, Button, Text, TextInput, StyleSheet } from "react-native";
+import { View, Button, Text, TouchableOpacity, TextInput, StyleSheet } from "react-native";
+import {connect} from 'react-redux';
+import ImagePicker from 'react-native-image-picker';
+import {signup} from '../../actions'
 
-export default class SignUp extends React.Component {
+const imageOption = {
+  title: 'Select Avatar',
+  customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
+ class SignUp extends React.Component {
   state = {
     username: "",
     password: "",
     email: "",
-    phone_number: ""
+    phone_number: "",
+    file:{}
   };
   onChangeText = (key, val) => {
     this.setState({ [key]: val });
   };
   signUp = async () => {
-    const { username, password, email, phone_number } = this.state;
-    try {
-      // here place your signup logic
-      console.log("user successfully signed up!: ", success);
-    } catch (err) {
-      console.log("error signing up: ", err);
-    }
+    const { username, password, email, phone_number, file } = this.state;
+    this.props.register({ username, password, email, phone_number, file })
   };
+
+  showImagePicker(imageOptions) {
+
+    ImagePicker.showImagePicker(imageOptions, response => {
+     console.log("image options >>> ",response)
+      if (response.uri) {
+          this.setState({ file: { uri: response.uri, name:response.fileName, type:'image/jpg' } });        
+      }
+    });
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -59,6 +77,14 @@ export default class SignUp extends React.Component {
           placeholderTextColor="white"
           onChangeText={val => this.onChangeText("phone_number", val)}
         />
+
+        <TouchableOpacity
+                      onPress={() => {
+                        this.showImagePicker( { ...imageOption, title: "Select Document" });
+                      }}>
+                      <Text>File</Text>
+        </TouchableOpacity>              
+
         <Button title="Sign Up" onPress={this.signUp} />
       </View>
     );
@@ -81,3 +107,19 @@ const styles = StyleSheet.create({
     alignItems: "center"
   }
 });
+
+
+const mapStateToProps = ({ }) => {  
+  return {};
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    register: user => dispatch(signup(user))
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SignUp);
