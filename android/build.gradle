@@ -27,6 +27,9 @@ allprojects {
             url "$rootDir/../node_modules/react-native/android"
         }
         maven { url 'https://jitpack.io' }
+        maven {
+            url "$rootDir/../node_modules/react-native-background-fetch/android/libs"
+        }
     }
 }
 ext {
@@ -37,6 +40,9 @@ ext {
     compileSdkVersion = 27
     targetSdkVersion = 27
     supportLibVersion = "27.1.1"
+    googlePlayServicesVersion = "11.8.0"
+    androidMapsUtilsVersion = "0.5+"
+    // playServicesVersion = "11.8.0"
 }
 
 subprojects { subproject ->

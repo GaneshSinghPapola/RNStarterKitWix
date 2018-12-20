@@ -96,11 +96,14 @@ def enableProguardInReleaseBuilds = false
 android {
     compileSdkVersion 27
     buildToolsVersion "27.0.3"
+    // compileSdkVersion rootProject.compileSdkVersion
+    // buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         applicationId "com.rnframework"
         minSdkVersion 19
         targetSdkVersion 27
+        // targetSdkVersion rootProject.targetSdkVersion
         missingDimensionStrategy "RNN.reactNativeVersion", "reactNative55"
         versionCode 1
         versionName "1.0"
@@ -132,6 +135,7 @@ android {
     }
     buildTypes {
         release {
+            debuggable true
             signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
@@ -161,12 +165,16 @@ configurations.all {
 }
 
 dependencies {
-    compile project(':react-native-vector-icons')
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-         implementation 'com.android.support:design:27.1.1'
+    compile project(':react-native-background-fetch')
+        compile project(':react-native-maps')
+        compile project(':react-native-vector-icons')
+        implementation fileTree(dir: "libs", include: ["*.jar"])
+        implementation 'com.android.support:design:27.1.1'
         implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
         implementation "com.facebook.react:react-native:+"  // From node_modules
-       implementation project(':react-native-navigation')
+        implementation project(':react-native-navigation')
+        implementation 'com.google.android.gms:play-services-base:11.8.0'
+        implementation 'com.google.android.gms:play-services-maps:11.8.0'
 }
 
 // Run this once to be able to run the application with BUCK
